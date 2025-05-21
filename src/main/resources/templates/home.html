@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Storage Service</title>
+    <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1>Book Storage Service</h1>
+
+    <!-- Добавление новой книги -->
+    <div class="section">
+        <h2>Добавление новой книги</h2>
+        <form id="addBookForm" th:method="POST" th:action="@{/}" th:object="${newBook}">
+            <div>
+                <label for="title">Название:</label>
+                <input type="text" id="title" name="title" th:field="*{title}" required>
+            </div>
+            <div>
+                <label for="author">Автор:</label>
+                <input type="text" id="author" th:field="*{author}" required>
+            </div>
+            <div>
+                <label for="isbn">ISBN:</label>
+                <input type="text" id="isbn" th:field="*{ISBN}" required>
+            </div>
+            <div>
+                <label for="year">Год издания:</label>
+                <input type="number" id="year" name="year" min="0" max="2026" th:field="*{year}" required>
+            </div>
+            <div>
+                <label for="genre">Жанр:</label>
+                <input type="text" id="genre" name="genre" th:field="*{genre}">
+
+            </div>
+            <div>
+                <label for="publisher">Издательство:</label>
+                <input type="text" id="publisher" name="publisher" th:field="*{publisher}">
+            </div>
+            <div class="full-width">
+                <label for="description">Описание:</label>
+                <textarea id="description" name="description" th:field="*{description}" rows="3"></textarea>
+            </div>
+            <div class="full-width">
+                <button type="submit">Добавить книгу</button>
+            </div>
+        </form>
+        <div id="addBookResult" class="results" style="display: none;"></div>
+        <div id="addBookError" class="error" style="display: none;"></div>
+    </div>
+
+    <!-- Получение списка всех книг -->
+    <div class="section">
+        <h2>Список всех книг</h2>
+        <button id="getAllBooks" onclick="window.location='/AllBooks'">Получить все книги</button>
+    </div>
+    <div class="section">
+        <h2>Поиск книги по ID</h2>
+        <form id="getBookByIdForm">
+            <div>
+                <label for="bookId">ID книги:</label>
+                <input type="text" id="bookId" name="bookId" required>
+            </div>
+            <div>
+                <button type="submit">Найти книгу</button>
+            </div>
+        </form>
+        <div id="bookByIdResult" class="results" style="display: none;"></div>
+        <div id="bookByIdError" class="error" style="display: none;"></div>
+    </div>
+
+    <!-- Получение книги по ISBN -->
+    <div class="section">
+        <h2>Поиск книги по ISBN</h2>
+        <form id="getBookByIsbnForm">
+            <div>
+                <label for="searchIsbn">ISBN книги:</label>
+                <input type="text" id="searchIsbn" name="searchIsbn" required>
+            </div>
+            <div>
+                <button type="submit">Найти книгу</button>
+            </div>
+        </form>
+        <div id="bookByIsbnResult" class="results" style="display: none;"></div>
+        <div id="bookByIsbnError" class="error" style="display: none;"></div>
+    </div>
+</div>

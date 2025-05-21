@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${book.getTitle()} + ' | Детали'">Детали книги</title>
+    <link href="../static/css/book.css" th:href="@{/css/book.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="book-header">
+        <h1 class="book-title" th:text="${book.getTitle()}">Название книги</h1>
+        <div class="book-author" th:text="${book.getAuthor()}">Автор книги</div>
+    </div>
+
+    <div class="book-details">
+        <div class="detail-card">
+            <div class="detail-label">ID</div>
+            <div class="detail-value" th:text="${book.getID()}">12345</div>
+        </div>
+        <div class="detail-card">
+            <div class="detail-label">ISBN</div>
+            <div class="detail-value" th:text="${book.getISBN()}">978-3-16-148410-0</div>
+        </div>
+        <div class="detail-card">
+            <div class="detail-label">Год издания</div>
+            <div class="detail-value" th:text="${book.getYear()}">2023</div>
+        </div>
+        <div class="detail-card">
+            <div class="detail-label">Жанр</div>
+            <div class="detail-value" th:text="${book.getGenre()}">Фантастика</div>
+        </div>
+        <div class="detail-card">
+            <div class="detail-label">Издательство</div>
+            <div class="detail-value" th:text="${book.getPublisher()}">Издательский дом</div>
+        </div>
+    </div>
+
+    <div class="book-description">
+        <h3>Описание</h3>
+        <p th:text="${book.getDescription()} ?: 'Описание отсутствует'">
+            Здесь будет подробное описание книги, включая сюжет, основные темы и персонажей.
+        </p>
+    </div>
+
+    <div class="action-buttons">
+        <a href="/AllBooks" class="btn btn-back" >← Назад</a>
+        <a th:href="@{/AllBooks/edit/{id}(id=${book.getID()})}" class="btn btn-edit">Редактировать</a>
+        <form th:method="DELETE" th:action="@{/{ID}(ID = ${book.getID()})}">
+        <button type="submit" class="btn btn-delete">Удалить</button>
+        </form>
+    </div>
+</div>
