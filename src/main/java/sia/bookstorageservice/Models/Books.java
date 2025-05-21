@@ -3,7 +3,7 @@ package sia.bookstorageservice.Models;
 import org.springframework.validation.annotation.Validated;
 
 public class Books {
-    private int ID;
+    int ID;
     private String ISBN;
     private String title;
     private String author;

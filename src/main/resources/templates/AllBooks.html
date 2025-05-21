@@ -13,7 +13,6 @@
     <h1>Все книги</h1>
 
     <div class="book-list">
-        <!-- Thymeleaf цикл для отображения книг -->
         <div th:each="book : ${shelf}" class="book-item">
             <a th:href="@{/AllBooks/{ID}(ID = ${book.getID()})}"
                th:text="${book.getTitle()} + ' ' + ${book.getAuthor()}"

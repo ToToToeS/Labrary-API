@@ -90,3 +90,30 @@ tr:nth-child(even) {
     color: red;
     margin-top: 10px;
 }
+/* Стили для кнопок */
+button, input[type="submit"] {
+    padding: 8px 16px;
+    margin: 5px 0;
+    width: auto;
+    min-width: 150px; /* Фиксированная минимальная ширина */
+    display: inline-block;
+    text-align: center;
+}
+
+/* Выравнивание кнопок в формах */
+form div {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+form div label {
+    min-width: 120px; /* Фиксированная ширина для меток */
+    margin-right: 10px;
+}
+
+/* Специально для кнопки "Получить все книги" */
+#getAllBooks {
+    width: auto;
+    padding: 8px 16px;
+}
