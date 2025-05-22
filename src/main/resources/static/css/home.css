@@ -1,119 +1,53 @@
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
-}
-.container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
-    background: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-h1 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 30px;
 }
 .section {
     margin-bottom: 30px;
-    padding: 20px;
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-.section h2 {
+h2 {
     margin-top: 0;
-    color: #444;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-.full-width {
-    grid-column: 1 / -1;
-}
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-input, select, textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+    color: #333;
 }
 button {
+    padding: 8px 15px;
     background-color: #4CAF50;
     color: white;
-    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    margin-right: 10px;
 }
 button:hover {
     background-color: #45a049;
 }
-.results {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    white-space: pre-wrap;
-}
-table {
+input, textarea, select {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-th, td {
-    border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    margin: 5px 0 15px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
-th {
-    background-color: #f2f2f2;
-}
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+pre {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
 }
 .error {
     color: red;
-    margin-top: 10px;
 }
-/* Стили для кнопок */
-button, input[type="submit"] {
-    padding: 8px 16px;
-    margin: 5px 0;
-    width: auto;
-    min-width: 150px; /* Фиксированная минимальная ширина */
-    display: inline-block;
-    text-align: center;
-}
-
-/* Выравнивание кнопок в формах */
-form div {
-    margin-bottom: 10px;
+.form-row {
     display: flex;
-    align-items: center;
+    gap: 15px;
 }
-
-form div label {
-    min-width: 120px; /* Фиксированная ширина для меток */
-    margin-right: 10px;
-}
-
-/* Специально для кнопки "Получить все книги" */
-#getAllBooks {
-    width: auto;
-    padding: 8px 16px;
+.form-row > div {
+    flex: 1;
 }

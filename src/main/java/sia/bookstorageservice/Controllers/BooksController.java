@@ -10,8 +10,10 @@ import sia.bookstorageservice.DAO.BooksDAO;
 import sia.bookstorageservice.Models.Books;
 
 import java.sql.SQLException;
+import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/")
 public class BooksController {
 
     @Autowired
@@ -21,46 +23,30 @@ public class BooksController {
         this.booksDAO = booksDAO;
     }
 
-    @GetMapping("/")
-    public String MainMenu(@ModelAttribute("newBook") Books newBook) {
-        return "home";
+    @GetMapping("/books")
+    public List<Books>getAllBooks() throws SQLException {
+        return booksDAO.index();
     }
 
-    @PostMapping("/")
-    public String create(@ModelAttribute("newBook") Books books) throws SQLException {
+    @GetMapping("books/{ID}")
+    public Books getBook(@PathVariable("ID") int ID) throws SQLException {
+        return booksDAO.show(ID);
+    }
+
+    @PostMapping("/books")
+    public Books createBook(@RequestBody Books books) throws SQLException {
         booksDAO.save(books);
-        return "redirect:/AllBooks";
+        return books;
     }
 
-    @GetMapping("/AllBooks")
-    public String index(Model model) throws SQLException {
-        //Получить все книги из DAO
-        model.addAttribute("shelf",booksDAO.index());
-        return "AllBooks";
+    @PatchMapping("/books/{ID}")
+    public Books updateBook(@RequestBody Books newBooks, @PathVariable("ID") int id) throws SQLException {
+        booksDAO.update(id, newBooks);
+        return booksDAO.show(id);
     }
 
-    @GetMapping("/AllBooks/{ID}")
-    public  String show(@PathVariable("ID") int ID, Model model) throws SQLException {
-        model.addAttribute("book",booksDAO.show(ID));
-            model.addAttribute("shelf", booksDAO);
-        return "Book";
-    }
-
-    @GetMapping("/AllBooks/edit/{ID}")
-    public String edit(@PathVariable("ID") int ID, Model model) throws SQLException {
-        model.addAttribute("book", booksDAO.show(ID));
-        return "edit";
-    }
-
-    @PatchMapping("/AllBooks/{ID}")
-    public String update(@PathVariable("ID") int ID, @ModelAttribute("book") @Valid Books books, BindingResult bindingResult) throws SQLException {
-        booksDAO.update(ID, books);
-        return "redirect:/AllBooks/{ID}";
-    }
-
-    @DeleteMapping("/{ID}")
-    public String delete(@PathVariable("ID") int ID) throws SQLException {
-        booksDAO.delete(ID);
-        return "redirect:/AllBooks";
+    @DeleteMapping("/book/{ID}")
+    public void deleteBook(@PathVariable("ID") int id) throws SQLException {
+        booksDAO.delete(id);
     }
 }

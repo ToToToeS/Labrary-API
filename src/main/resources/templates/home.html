@@ -1,59 +1,132 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Storage Service</title>
-    <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/home.css">
+    <script src="js/home.js"></script>
 </head>
 <body>
-<div class="container">
-    <h1>Book Storage Service</h1>
+<h1>Book Storage Service</h1>
 
-    <div class="section">
-        <h2>Добавление новой книги</h2>
-        <form id="addBookForm" th:method="POST" th:action="@{/}" th:object="${newBook}">
-            <div>
-                <label for="title">Название:</label>
-                <input type="text" id="title" name="title" th:field="*{title}" required>
-                <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name error</div>
-            </div>
-            <div>
-                <label for="author">Автор:</label>
-                <input type="text" id="author" th:field="*{author}" required>
-            </div>
-            <div>
-                <label for="isbn">ISBN:</label>
-                <input type="text" id="isbn" th:field="*{ISBN}" required>
-            </div>
-            <div>
-                <label for="year">Год издания:</label>
-                <input type="number" id="year" name="year" min="0" max="2026" th:field="*{year}" required>
-            </div>
-            <div>
-                <label for="genre">Жанр:</label>
-                <input type="text" id="genre" name="genre" th:field="*{genre}">
-
-            </div>
-            <div>
-                <label for="publisher">Издательство:</label>
-                <input type="text" id="publisher" name="publisher" th:field="*{publisher}">
-            </div>
-            <div class="full-width">
-                <label for="description">Описание:</label>
-                <textarea id="description" name="description" th:field="*{description}" rows="3"></textarea>
-            </div>
-            <div class="full-width">
-                <button type="submit">Добавить книгу</button>
-            </div>
-        </form>
-        <div id="addBookResult" class="results" style="display: none;"></div>
-        <div id="addBookError" class="error" style="display: none;"></div>
-    </div>
-
-    <!-- Получение списка всех книг -->
-    <div class="section">
-        <h2>Список всех книг</h2>
-        <button id="getAllBooks" onclick="window.location='/AllBooks'">Получить все книги</button>
-    </div>
+<!-- Get All Books -->
+<div class="section">
+    <h2>Get All Books</h2>
+    <button onclick="getAllBooks()">Get All Books</button>
+    <div id="allBooksResult"></div>
 </div>
+
+<!-- Get Book by ID -->
+<div class="section">
+    <h2>Get Book by ID</h2>
+    <input type="number" id="bookId" placeholder="Enter Book ID">
+    <button onclick="getBookById()">Get Book</button>
+    <div id="bookResult"></div>
+</div>
+
+<!-- Create Book -->
+<div class="section">
+    <h2>Create New Book</h2>
+    <form id="createBookForm">
+        <div class="form-row">
+            <div>
+                <label for="title">Title</label>
+                <input type="text" id="title" placeholder="Война и Мир" required>
+            </div>
+            <div>
+                <label for="author">Author</label>
+                <input type="text" id="author" placeholder="Толстой" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <label for="year">Year</label>
+                <input type="number" id="year" placeholder="1869">
+            </div>
+            <div>
+                <label for="genre">Genre</label>
+                <input type="text" id="genre" placeholder="роман">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <label for="publisher">Publisher</label>
+                <input type="text" id="publisher" placeholder="ООО Издательство">
+            </div>
+            <div>
+                <label for="isbn">ISBN</label>
+                <input type="text" id="isbn" placeholder="123456789">
+            </div>
+        </div>
+
+        <div>
+            <label for="description">Description</label>
+            <textarea id="description" rows="4" placeholder="норм описанике"></textarea>
+        </div>
+
+        <button type="button" onclick="createBook()">Create Book</button>
+    </form>
+    <div id="createBookResult"></div>
+</div>
+
+<!-- Update Book -->
+<div class="section">
+    <h2>Update Book</h2>
+    <input type="number" id="updateBookId" placeholder="Book ID to update" required>
+
+    <form id="updateBookForm">
+        <div class="form-row">
+            <div>
+                <label for="updateTitle">Title</label>
+                <input type="text" id="updateTitle" placeholder="Новое название">
+            </div>
+            <div>
+                <label for="updateAuthor">Author</label>
+                <input type="text" id="updateAuthor" placeholder="Новый автор">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <label for="updateYear">Year</label>
+                <input type="number" id="updateYear" placeholder="Новый год">
+            </div>
+            <div>
+                <label for="updateGenre">Genre</label>
+                <input type="text" id="updateGenre" placeholder="Новый жанр">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <label for="updatePublisher">Publisher</label>
+                <input type="text" id="updatePublisher" placeholder="Новый издатель">
+            </div>
+            <div>
+                <label for="updateIsbn">ISBN</label>
+                <input type="text" id="updateIsbn" placeholder="Новый ISBN">
+            </div>
+        </div>
+
+        <div>
+            <label for="updateDescription">Description</label>
+            <textarea id="updateDescription" rows="4" placeholder="Новое описание"></textarea>
+        </div>
+
+        <button type="button" onclick="updateBook()">Update Book</button>
+    </form>
+    <div id="updateBookResult"></div>
+</div>
+
+<!-- Delete Book -->
+<div class="section">
+    <h2>Delete Book</h2>
+    <input type="number" id="deleteBookId" placeholder="Enter Book ID to delete">
+    <button onclick="deleteBook()">Delete Book</button>
+    <div id="deleteBookResult"></div>
+</div>
+</body>
+</html>
