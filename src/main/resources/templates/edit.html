@@ -41,7 +41,7 @@
         </div>
         <div class="full-width button-group">
             <button type="submit">Обновить информацию</button>
-            <a th:href="@{/{ID}(ID = ${book.getID()})}" class="btn btn-back">Назад</a>
+            <a th:href="@{/AllBooks/{ID}(ID = ${book.getID()})}" class="btn btn-back">Назад</a>
         </div>
     </form>
     <div id="updateBookResult" class="results" style="display: none;"></div>

@@ -1,44 +1,49 @@
 package sia.bookstorageservice.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import sia.bookstorageservice.Models.Books;
-import sia.bookstorageservice.Models.Genre;
 
-import java.util.ArrayList;
+import java.sql.*;
 import java.util.List;
 
 @Component
 public class BooksDAO {
+    private final JdbcTemplate jdbcTemplate;
 
-    int BOOKS_COUNT;
-    List<Books> shelf = new ArrayList<>();
-
-    public List<Books> index() {
-        return shelf;
+    @Autowired
+    public BooksDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate=jdbcTemplate;
     }
 
-    public Books show(int ID) {
-    return shelf.stream().filter(book -> book.getID() == ID).findAny().orElse(null);
+    public List<Books> index() throws SQLException {
+        return jdbcTemplate.query("SELECT * FROM books",new BeanPropertyRowMapper<>(Books.class));
     }
 
-    public void save(Books books) {
-        books.setID(++BOOKS_COUNT);
-        shelf.add(books);
+    public Books show(int ID) throws SQLException {
+        return jdbcTemplate.query("SELECT * FROM books WHERE id=?",new Object[]{ID},
+                new BeanPropertyRowMapper<>(Books.class)).stream().findAny().orElse(null);
     }
 
-    public void delete(int ID) {
-        shelf.removeIf(el -> el.getID() == ID);
+    public void save(Books book) throws SQLException {
+       jdbcTemplate.update("INSERT INTO books VALUES(?, ?, ?, ?, ?, ?, ?, ?)",getId(book), book.getISBN(), book.getTitle(),
+               book.getAuthor(), book.getYear(),book.getGenre(),  book.getPublisher(), book.getDescription());
     }
 
-    public void update(int ID, Books otherbooks) {
-        Books book = show(ID);
+    public void delete(int ID) throws SQLException {
+        jdbcTemplate.update("DELETE FROM books WHERE ID=?", ID);
+    }
 
-        book.setISBN(otherbooks.getISBN());
-        book.setAuthor(otherbooks.getAuthor());
-        book.setDescription(otherbooks.getDescription());
-        book.setYear(otherbooks.getYear());
-        book.setGenre(otherbooks.getGenre());
-        book.setPublisher(otherbooks.getPublisher());
-        book.setTitle(otherbooks.getTitle());
+
+    public void update(int ID, Books otherbooks) throws SQLException {
+    jdbcTemplate.update("UPDATE books SET isbn=?, title=?, author=?, year=?, genre=?, publisher=?, description=? WHERE ID=?",otherbooks.getISBN()
+            ,otherbooks.getTitle(),otherbooks.getAuthor(), otherbooks.getYear(), otherbooks.getGenre(), otherbooks.getPublisher(), otherbooks.getDescription(), ID);
+    }
+
+
+    private int getId(Books books) {
+        return Math.abs(books.hashCode() % 1000000000);
     }
 }

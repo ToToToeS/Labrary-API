@@ -10,13 +10,13 @@
 <div class="container">
     <h1>Book Storage Service</h1>
 
-    <!-- Добавление новой книги -->
     <div class="section">
         <h2>Добавление новой книги</h2>
         <form id="addBookForm" th:method="POST" th:action="@{/}" th:object="${newBook}">
             <div>
                 <label for="title">Название:</label>
                 <input type="text" id="title" name="title" th:field="*{title}" required>
+                <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name error</div>
             </div>
             <div>
                 <label for="author">Автор:</label>
