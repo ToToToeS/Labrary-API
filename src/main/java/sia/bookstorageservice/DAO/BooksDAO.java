@@ -27,9 +27,10 @@ public class BooksDAO {
                 new BeanPropertyRowMapper<>(Books.class)).stream().findAny().orElse(null);
     }
 
-    public void save(Books book) throws SQLException {
+    public Books save(Books book) throws SQLException {
        jdbcTemplate.update("INSERT INTO books VALUES(?, ?, ?, ?, ?, ?, ?, ?)",getId(book), book.getISBN(), book.getTitle(),
                book.getAuthor(), book.getYear(),book.getGenre(),  book.getPublisher(), book.getDescription());
+       return book;
     }
 
     public void delete(int ID) throws SQLException {
@@ -37,9 +38,10 @@ public class BooksDAO {
     }
 
 
-    public void update(int ID, Books otherbooks) throws SQLException {
+    public Books update(int ID, Books otherbooks) throws SQLException {
     jdbcTemplate.update("UPDATE books SET isbn=?, title=?, author=?, year=?, genre=?, publisher=?, description=? WHERE ID=?",otherbooks.getISBN()
             ,otherbooks.getTitle(),otherbooks.getAuthor(), otherbooks.getYear(), otherbooks.getGenre(), otherbooks.getPublisher(), otherbooks.getDescription(), ID);
+    return otherbooks;
     }
 
 
